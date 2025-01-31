@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Device Selection</title>
+</head>
+  
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Righteous&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+<style>
+body {font-family: Roboto, sans-serif; margin: 0;}
+  /* Ripple effect */
+button, button {
+  background-position: center;
+  transition: background 0.7s; /* Was 0.8*/
+}
+button:hover, button:hover {
+  background: #e0f2ff radial-gradient(circle, transparent 1%, #e0f2ff 1%) center/15000%;
+}
+.button:active, button:active {
+  background-color: #6eb9f7;
+  background-size: 100%;
+  transition: background 0s;
+}
+
+/* Button style */
+button, .button {
+  border: none;
+  border-radius: 2px;
+  padding: 12px 18px;
+  font-size: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: #2a3698;
+  background-color: white;
+  /*box-shadow: 0 0 4px #999;*/
+  outline: none;
+  font-family: Roboto;
+  font-weight: 500;
+  margin-top: 10px;
+  margin-right: 5px;
+  
+}
+
+/* Modal Content */
+.tabcontent {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  background: linear-gradient(221deg, rgba(42,54,152,1) 11%, rgba(17,21,57,1) 100%);
+background-color: #2a3698;
+  width: 100%;
+  /*-webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s;*/
+  height: 100%;
+  color: white;
+}
+  #deviceselect {
+    padding: 5px 10px;
+    text-align: center;
+  }
+   fieldset {border: 1px solid white; border-radius: 2px; width: 90%;}
+  legend {padding: 5px; font-weight: bold; text-transform: uppercase;}
+  
+  #Scoreboard1, #Scoreboard2, #Scoreboard3, #Scoreboard4 {
+    padding: 5px 10px;
+    text-align: center;
+  }
+  .playername {
+    font-size: 45px;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 50px;
+    font-family: Righteous;
+    font-weight: bold;
+  }
+  .playerscore {
+    font-size: 180px;
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Righteous;
+    font-weight: bold;
+  }
+  
+  
+
+  
+  
+  /* Add Animation */
+@-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+}
+
+@keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+}
+
+@-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+}
+</style>
+  <!--CONTROLER STYLE-->
+  <style>
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-item-left {
+  flex: 50%;
+}
+
+.flex-item-right {
+  flex: 50%;
+}
+
+/* Responsive layout - makes a one column-layout instead of a two-column layout */
+@media (max-width: 617px) {
+  .flex-item-right, .flex-item-left {
+    flex: 100%;
+  }
+}
+body {
+margin: 0;
+overflow: hidden;
+}
+/*.add, button, input[type=button] {
+  border-radius: 3px;
+  border: 1px solid gray;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-family: roboto, Segoe UI Variable, system-ui;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  user-select: none;
+}*/
+.add:active {
+  background: darkblue;
+  color: white;
+}
+.add:active[team=GUEST] {
+  background: darkred;
+  color: white;
+}
+.pannel {
+  position: absolute;
+  background: black;
+  color: lightgray;
+  padding: 5px;
+  font-family: System UI, roboto;
+  overflow: scroll;
+  height: 100%;
+  width: 100%;
+  cursor: default;
+}
+.multiflex-container {
+  display: flex;
+  
+}
+
+.multiflex-container > div {
+  margin: 10px;
+  padding: 10px;
+  flex: 35%;
+  border: 1px solid lightgray;
+  border-radius: 2px;
+}
+.pointvalue {
+  color: black;
+  background: lightgray;
+  padding: 1px 5px;
+  border: 1px solid darkgray;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: bold;
+  width: 100%;
+  outline: none;
+}
+.hiddeninput {font-family: inherit; font-size: inherit; background-color: transparent; border: none; outline: none; color: inherit; margin-bottom: 5px; width: 100%;}
+#questiontext {display: none;}</style>
+<body>
+  <button style="z-index: 1000; position: absolute;
+  top: 0; overflow: auto; opacity: 0.05;" onclick="opentab(event, 'deviceselect')">Home</button>
+
+<div id="deviceselect" class="tabcontent">
+   <h2>What device are you using?</h2>
+    <form id="deviceForm">
+        <fieldset>
+            <legend>Display Boards</legend>
+            <input checked type="radio" id="scoreboard1" name="device" value="Scoreboard 1">
+            <label for="scoreboard1">Scoreboard 1</label><br>
+            <input type="radio" id="scoreboard2" name="device" value="Scoreboard 2">
+            <label for="scoreboard2">Scoreboard 2</label><br>
+            <input type="radio" id="scoreboard3" name="device" value="Scoreboard 3">
+            <label for="scoreboard3">Scoreboard 3</label><br>
+            <input type="radio" id="scoreboard4" name="device" value="Scoreboard 4">
+            <label for="scoreboard4">Scoreboard 4</label><br>
+          <input type="radio" id="maindisplay" name="device" value="maindisplay">
+            <label for="maindisplay">Main Display</label>
+        </fieldset>
+        <fieldset>
+            <legend>Controllers</legend>
+            <input type="radio" id="mainController" name="device" value="Main Controller">
+            <label for="mainController">Main Controller</label>
+        </fieldset>
+    </form>
+    <button onclick="choosedevice()">Submit</button><br><br>
+  <button onclick="openFullscreen();">Open Fullscreen</button>
+<button onclick="closeFullscreen();">Close Fullscreen</button>
+
+</div>
+
+<div id="Scoreboard1" class="tabcontent">
+  <div class="playername" id="playeronename">GEORGE</div><br>
+  <div class="playerscore" id="playeronescore">$566,400</div>
+</div>
+  <div id="Scoreboard2" class="tabcontent">
+  <div class="playername" id="playertwoname">GEORGE2</div><br>
+  <div class="playerscore" id="playertwoscore">$566,400</div>
+</div>
+  <div id="Scoreboard3" class="tabcontent">
+  <div class="playername" id="playerthreename">GEORGE</div><br>
+  <div class="playerscore" id="playerthreescore">$566,400</div>
+</div>
+  <div id="Scoreboard4" class="tabcontent">
+  <div class="playername" id="playerfourname">GEORGE GRAMKE JUNIOR</div><br>
+  <div class="playerscore" id="playerfourscore">$566,400</div>
+</div>
+  <div id="MainController" class="tabcontent">
+    <div class="pannel">
+  <h3><span style="font-weight: 300;">Wireless</span>JParty</h3>
+  
+  
+  <div id="questiontext">
+  <center>
+    <small>VALUE: <b id="questionvalue">$400</b> CATEGORY: <b id="questioncat">Random</b></small>
+  <h1 id="questiontext">This number, one of the first 20, uses only one vowel (4 times!).</h1>
+  <h3 id="questionanswer">Seventeen</h3>
+    <button onclick="socket.emit('gamefunction', 'prompt.showQuestion();');">Show Answer on Screen</button>
+    <button onclick="hidequestiontext(); socket.emit('gamefunction', 'prompt.hide();');">Close</button>
+    
+  </center>
+  </div>
+  
+  <div id="gameboardtable">
+    <button onclick="showquestiontext();">Sample</button><br>
+    <table style="text-align: center;">
+<tbody>
+<tr>
+<td id="cat1">Cat1</td>
+<td id="cat2">Cat2</td>
+<td id="cat3">Cat3</td>
+<td id="cat4">Cat4</td>
+<td id="cat5">Cat5</td>
+</tr>
+<tr>
+<td><button onclick="opener.prompt.show('q00', 100)">100</button></td>
+<td><button onclick="opener.prompt.show('q01', 100)">100</button></td>
+<td><button onclick="opener.prompt.show('q02', 100)">100</button></td>
+    <td><button onclick="opener.prompt.show('q03', 100)">100</button></td>
+    <td><button onclick="opener.prompt.show('q04', 100)">100</button></td>
+</tr>
+<tr>
+    <td><button onclick="opener.prompt.show('q10', 200)">200</button></td>
+    <td><button onclick="opener.prompt.show('q11', 200)">200</button></td>
+    <td><button onclick="opener.prompt.show('q12', 200)">200</button></td>
+    <td><button onclick="opener.prompt.show('q13', 200)">200</button></td>
+    <td><button onclick="opener.prompt.show('q14', 200)">200</button></td>
+</tr>
+<tr>
+<td><button onclick="opener.prompt.show('q20', 300)">300</button></td>
+    <td><button onclick="opener.prompt.show('q21', 300)">300</button></td>
+    <td><button onclick="opener.prompt.show('q22', 300)">300</button></td>
+    <td><button onclick="opener.prompt.show('q23', 300)">300</button></td>
+    <td><button onclick="opener.prompt.show('q24', 300)">300</button></td>
+</tr>
+<tr>
+<td><button onclick="opener.prompt.show('q30', 400)">400</button></td>
+    <td><button onclick="opener.prompt.show('q31', 400)">400</button></td>
+    <td><button onclick="opener.prompt.show('q32', 400)">400</button></td>
+    <td><button onclick="opener.prompt.show('q33', 400)">400</button></td>
+    <td><button onclick="opener.prompt.show('q34', 400)">400</button></td>
+<br>
+</tr>
+<tr>
+<td><button onclick="opener.prompt.show('q40', 500)">500</button></td>
+    <td><button onclick="opener.prompt.show('q41', 500)">500</button></td>
+    <td><button onclick="opener.prompt.show('q42', 500)">500</button></td>
+    <td><button onclick="opener.prompt.show('q43', 500)">500</button></td>
+    <td><button onclick="opener.prompt.show('q44', 500)">500</button></td>
+</tr>
+</tbody>
+</table>
+    
+  </div>
+  
+<div class="multiflex-container">
+  <div>
+    <input class="hiddeninput" onchange="syncsend();" id="cplayeronename" value="PLAYER 1">
+    <input class="pointvalue" id="cplayeronescore" onchange="syncsend();" value="$566,400">
+    <button onclick="socket.emit('gamefunction', 'game.addPoints(1)');">+</button><button onclick="socket.emit('gamefunction', 'game.subtractPoints(1)');">−</button></div>
+   <div>
+    <input class="hiddeninput" onchange="syncsend();"id="cplayertwoname" value="PLAYER 2">
+    <input class="pointvalue" onchange="syncsend();" id="cplayertwoscore" value="$566,400">
+    <button onclick="socket.emit('gamefunction', 'game.addPoints(2)');">+</button><button onclick="socket.emit('gamefunction', 'game.subtractPoints(2)');">−</button></div> 
+  <div>
+    <input class="hiddeninput" onchange="syncsend();" id="cplayerthreename" value="PLAYER 3">
+    <input class="pointvalue" onchange="syncsend();" id="cplayerthreescore" value="$566,400">
+    <button onclick="socket.emit('gamefunction', 'game.addPoints(3)');">+</button><button onclick="socket.emit('gamefunction', 'game.subtractPoints(3)');">−</button></div> 
+  <div>
+    <input class="hiddeninput" onchange="syncsend();" id="cplayerfourname" value="PLAYER 4">
+    <input class="pointvalue" onchange="syncsend();" id="cplayerfourscore" value="-566,400">
+    <button onclick="socket.emit('gamefunction', 'game.addPoints(4)');">+</button><button onclick="socket.emit('gamefunction', 'game.subtractPoints(4)');">−</button></div>
+</div>
+  
+  </div>
+    <script>
+    /*  
+    ALL OF THIS STUFF NEEDS TO BE SYNCED WITH THE MAIN DISPLAY (THE GAME) AND SCOREBOARDS
+    
+    IDs: /element name
+    - playeronename /div
+    - playeronescore /div
+    
+    - playertwoname /div
+    - playertwoscore /div
+    
+    - playerthreename /div
+    - playerthreescore /div
+    
+    - playerfourname /div
+    - playerfourscore /div
+    
+    questionvalue /b
+    questioncat /b
+    questiontext /h1
+    questionanswer /h3
+    - cplayeronename /input
+    - cplayertwoname /input
+    - cplayerthreename /input
+    - cplayerfourname /input
+    - cplayeronescore /input
+    - cplayertwoscore /input
+    - cplayerthreescore /input
+    - cplayerfourscore /input
+    
+    FUNCTIONs:
+    
+    gamefunction(gamefunction here - such as showanswer, hideanswer);
+    addpoint(player number (1-4) here);
+    opener.prompt.show(..., ...);
+    </script>
+    
+<script>
+  function showquestiontext() {
+  document.getElementById("questiontext").style.display = "block"; document.getElementById("gameboardtable").style.display = "none";
+
+  }
+  function hidequestiontext() {
+  document.getElementById("questiontext").style.display = "none"; document.getElementById("gameboardtable").style.display = "block";
+
+  }
+</script>
+<script>
+const inputElements = document.querySelectorAll(".pointvalue");
+        function checkInput(inputElement) {
+            const inputValue = parseFloat(inputElement.value);
+            if (inputValue < 0) {
+              inputElement.style.transition = "1s";
+ inputElement.style.background = "darkred";
+                  inputElement.style.color = "white";
+            } else {
+              inputElement.style.transition = "1s";
+               inputElement.style.background = "lightgray";
+                  inputElement.style.color = "black";
+            }
+        }
+
+        // Listen for input changes on all elements
+        inputElements.forEach(inputElement => {
+            inputElement.addEventListener("input", () => {
+                checkInput(inputElement);
+            });
+        });
+
+
+
+
+
+
+</script>
+  </div>
+  <div id="MainDisplay" class="tabcontent">
+  <h3>Display</h3>
+  <p>Paris is the capital of France.</p> 
+</div>
+<script>
+function opentab(evt, tabname) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabname).style.display = "block";
+  //evt.currentTarget.className += " active";
+}
+  opentab("click", 'deviceselect');
+
+  
+function choosedevice() {
+            var device = document.querySelector('input[name="device"]:checked').value;
+            if (device === "Scoreboard 1") {
+                opentab("click", 'Scoreboard1');
+            } else if (device === "Scoreboard 2") {
+                  opentab("click", 'Scoreboard2');
+            } else if (device === "Scoreboard 3") {
+                 opentab("click", 'Scoreboard3');
+            } else if (device === "Scoreboard 4") {
+                opentab("click", 'Scoreboard4');
+            } else if (device === "Main Controller") {
+                  opentab("click", 'MainController');
+            }
+               else if (device === "maindisplay") {
+                  opentab("click", 'MainDisplay');
+            }
+        }
+</script>
+
+<script>
+var elem = document.documentElement;
+function openFullscreen() {
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  } else if (elem.webkitRequestFullscreen) { /* Safari */
+    elem.webkitRequestFullscreen();
+  } else if (elem.msRequestFullscreen) { /* IE11 */
+    elem.msRequestFullscreen();
+  }
+}
+
+function closeFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) { /* Safari */
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) { /* IE11 */
+    document.msExitFullscreen();
+  }
+}
+</script>
+  
+  
+  <script>
+function syncget() {
+    
+    document.getElementById("playeronescore").innerHTML = document.getElementById("score1").value;
+    document.getElementById("cplayeronescore").value = document.getElementById("score1").value;
+
+    document.getElementById("playertwoscore").innerHTML = document.getElementById("score2").value;
+    document.getElementById("cplayertwoscore").value = document.getElementById("score2").value;
+
+    document.getElementById("playerthreescore").innerHTML = document.getElementById("score3").value;
+    document.getElementById("cplayerthreescore").value = document.getElementById("score3").value;
+
+    document.getElementById("playerfourscore").innerHTML = document.getElementById("score4").value;
+    document.getElementById("cplayerfourscore").value = document.getElementById("score4").value;
+
+    document.getElementById("playeronename").innerHTML = document.getElementById("player1").value;
+    document.getElementById("cplayeronename").value = document.getElementById("player1").value;
+
+    document.getElementById("playertwoname").innerHTML = document.getElementById("player2").value;
+    document.getElementById("cplayertwoname").value = document.getElementById("player2").value;
+
+    document.getElementById("playerthreename").innerHTML = document.getElementById("player3").value;
+    document.getElementById("cplayerthreename").value = document.getElementById("player3").value;
+
+    document.getElementById("playerfourname").innerHTML = document.getElementById("player4").value;
+    document.getElementById("cplayerfourname").value = document.getElementById("player4").value;
+  
+  
+ document.getElementById("cplayeronename").dispatchEvent(new Event("input"));
+document.getElementById("cplayertwoname").dispatchEvent(new Event("input"));
+document.getElementById("cplayerthreename").dispatchEvent(new Event("input"));
+document.getElementById("cplayerfourname").dispatchEvent(new Event("input"));
+document.getElementById("cplayeronescore").dispatchEvent(new Event("input"));
+document.getElementById("cplayertwoscore").dispatchEvent(new Event("input"));
+document.getElementById("cplayerthreescore").dispatchEvent(new Event("input"));
+document.getElementById("cplayerfourscore").dispatchEvent(new Event("input"));
+}
+function syncsend() {
+   
+    document.getElementById("score1").value = document.getElementById("cplayeronescore").value;
+
+  
+    document.getElementById("score2").value = document.getElementById("cplayertwoscore").value;
+
+  
+    document.getElementById("score3").value = document.getElementById("cplayerthreescore").value;
+
+    
+    document.getElementById("score4").value = document.getElementById("cplayerfourscore").value;
+
+    
+    document.getElementById("player1").value = document.getElementById("cplayeronename").value;
+
+  
+    document.getElementById("player2").value = document.getElementById("cplayertwoname").value;
+
+ 
+    document.getElementById("player3").value = document.getElementById("cplayerthreename").value;
+
+   
+    document.getElementById("player4").value = document.getElementById("cplayerfourname").value;
+  
+  document.getElementById("cplayeronename").dispatchEvent(new Event("input"));
+document.getElementById("cplayertwoname").dispatchEvent(new Event("input"));
+document.getElementById("cplayerthreename").dispatchEvent(new Event("input"));
+document.getElementById("cplayerfourname").dispatchEvent(new Event("input"));
+document.getElementById("cplayeronescore").dispatchEvent(new Event("input"));
+document.getElementById("cplayertwoscore").dispatchEvent(new Event("input"));
+document.getElementById("cplayerthreescore").dispatchEvent(new Event("input"));
+document.getElementById("cplayerfourscore").dispatchEvent(new Event("input"));
+}
+    
+  //gamefunction(gamefunction here - such as showanswer, hideanswer);
+    //addpoint(player number (1-4) here);
+    //opener.prompt.show(..., ...);   
+     
+    
+
+    //var code = document.getElementById('inputBox').value;
+
+// Run the code
+//eval(code);
+  </script>
+  <div style="z-index: 1000; position: absolute;
+  bottom: 0; overflow: auto; ">
+    <input id="score1" oninput="syncget();" type="text" placeholder="score1" />
+    <input id="score2" oninput="syncget();" type="text" placeholder="score2" />
+    <input id="score3" oninput="syncget();" type="text" placeholder="score3" />
+    <input id="score4" oninput="syncget();" type="text" placeholder="score4" />
+    <input id="player1" oninput="syncget();" type="text" placeholder="player1" />
+    <input id="player2" oninput="syncget();" type="text" placeholder="player2" />
+    <input id="player3" oninput="syncget();" type="text" placeholder="player3" />
+    <input id="player4" oninput="syncget();" type="text" placeholder="player4" />
+    <br>
+    <input id="questioncontext" oninput="syncget();"  placeholder="questiontext" />
+    <input id="questionanswer" oninput="syncget();" type="text" placeholder="questionanswer" />
+    <input id="questionpointvalue" oninput="syncget();" type="text" placeholder="questionpointvalue" />
+    <input id="questioncategory" oninput="syncget();" type="text" placeholder="questioncategory" />
+    <input id="questioncontrol" oninput="syncget();" type="text" placeholder="questioncontrol" />
+    </div>
+</body>
+</html>
